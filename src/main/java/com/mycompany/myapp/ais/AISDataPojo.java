@@ -1,10 +1,13 @@
 package com.mycompany.myapp.ais;
 
-import jakarta.annotation.Nullable;
+import java.time.LocalDateTime;
+
 import org.immutables.value.Value;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
+import jakarta.annotation.Nullable;
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 
 @Value.Immutable
 public abstract class AISDataPojo {
