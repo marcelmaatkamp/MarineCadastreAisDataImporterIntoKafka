@@ -1,10 +1,10 @@
-version: '3.4'
-
 services:
-  marinecadastreaisdataimporterintokafka:
-    image: marinecadastreaisdataimporterintokafka
+  importer:
+    image: marcelmaatkamp/marinecadastreaisdataimporterintokafka:latest
     build:
       context: .
       dockerfile: ./Dockerfile
     ports:
       - 3000:3000
+    volumes:
+      - ./src/main/resources/ais.csv:/application/ais.csv

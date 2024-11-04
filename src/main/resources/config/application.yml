@@ -7,6 +7,9 @@ logging:
 spring:
   application:
     name: JhipsterAiskafkaApplication
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false    
 kafka:
   bootstrap-servers: localhost:9092
   consumer:
@@ -22,4 +25,3 @@ kafka:
   topic:
     sample: queue.jhipsterAiskafkaApplication.sample
     
-spring.jackson.serialization.FAIL_ON_EMPTY_BEANS=false
