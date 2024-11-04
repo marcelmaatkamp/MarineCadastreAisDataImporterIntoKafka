@@ -52,7 +52,8 @@ public class AISDataProducer implements ApplicationListener<AISDataPojoEvent> {
   }
 
   public void shutdown() {
-    log.info("Shutdown Kafka producer");
-    kafkaProducer.close();
+      try (kafkaProducer) {
+          log.info("Shutdown Kafka producer");
+      }
   }
 }

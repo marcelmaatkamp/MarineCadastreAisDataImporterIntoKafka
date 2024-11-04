@@ -1,6 +1,5 @@
 package com.mycompany.myapp.wire.kafka.infrastructure.config;
 
-import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
