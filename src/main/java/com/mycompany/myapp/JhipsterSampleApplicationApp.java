@@ -1,29 +1,13 @@
 package com.mycompany.myapp;
 
-
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.core.env.Environment;
-
-import com.mycompany.myapp.ais.parser.AISDataLexer;
-import com.mycompany.myapp.shared.generation.domain.ExcludeFromGeneratedCodeCoverage;
-
-import com.mycompany.myapp.ais.AISDataBasePojoListener;
-import com.mycompany.myapp.ais.AISDataPojo;
-import com.mycompany.myapp.ais.parser.AISDataLexer;
-import com.mycompany.myapp.ais.parser.AISDataParser;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.core.env.Environment;
-
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import com.mycompany.myapp.shared.generation.domain.ExcludeFromGeneratedCodeCoverage;
 
 @SpringBootApplication
 @ExcludeFromGeneratedCodeCoverage(reason = "Not testing logs")

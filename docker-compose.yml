@@ -1,4 +1,64 @@
 services:
+
+  redpanda:
+    image: "redpandadata/redpanda:v23.3.4"
+    command:
+     - redpanda start
+     - --overprovisioned
+     - --smp 1
+     - --memory 1G
+     - --reserve-memory 0M
+     - --node-id 0
+     - --check=false
+     - --kafka-addr PLAINTEXT://0.0.0.0:29092,OUTSIDE://0.0.0.0:9092
+     - --advertise-kafka-addr PLAINTEXT://redpanda:29092,OUTSIDE://localhost:9092
+     - --set redpanda.enable_transactions=true
+     - --set redpanda.enable_idempotence=true
+    expose:
+      - "29092"
+      - "9092"
+      - "9644"
+    ports:
+      - "29092:29092"
+      - "9092:9092"
+      - "9644:9644"
+      - "8081:8081"
+    depends_on: [ ]
+    volumes:
+      - "redpanda:/var/lib/redpanda/data"
+    environment: {}
+    healthcheck:
+      test: curl -f localhost:9644/v1/status/ready
+      interval: 1s
+      timeout: 5s
+      retries: 5
+    restart: always
+  
+  redpanda-console:
+    image: redpandadata/console:v2.7.2
+    restart: unless-stopped
+    entrypoint: /bin/sh
+    command: -c "echo \"$$CONSOLE_CONFIG_FILE\" > /tmp/config.yml; /app/console"
+    environment:
+      CONFIG_FILEPATH: /tmp/config.yml
+      CONSOLE_CONFIG_FILE: |
+        kafka:
+          brokers: ["redpanda:29092"]
+          schemaRegistry:
+            enabled: true
+            urls: ["http://redpanda:8081"]
+        connect:
+          enabled: true
+          clusters:
+            - name: datagen
+              url: http://connect:8083
+    ports:
+      - "8080:8080"
+    healthcheck: { test: "curl -f localhost:8080", interval: 1s, start_period: 30s }
+    depends_on:
+      redpanda:
+        condition: service_healthy
+
   importer:
     image: marcelmaatkamp/marinecadastreaisdataimporterintokafka:latest
     build:
@@ -8,3 +68,8 @@ services:
       - 3000:3000
     volumes:
       - ./src/main/resources/ais.csv:/application/ais.csv
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: redpanda:29092
+
+volumes:
+  redpanda:
