@@ -1,4 +1,4 @@
-package com.mycompany.myapp.sample.infrastructure.secondary.kafka.producer;
+package com.mycompany.myapp.infrastructure.kafka.producer;
 
 import java.util.concurrent.Future;
 
@@ -16,6 +16,9 @@ import com.mycompany.myapp.shared.events.AISDataPojoEvent;
 
 import jakarta.annotation.PostConstruct;
 
+/**
+ * AISDataProducer
+ */
 @Repository
 public class AISDataProducer implements ApplicationListener<AISDataPojoEvent> {
 
@@ -49,7 +52,8 @@ public class AISDataProducer implements ApplicationListener<AISDataPojoEvent> {
   }
 
   public void shutdown() {
-    log.info("Shutdown Kafka producer");
-    kafkaProducer.close();
+      try (kafkaProducer) {
+          log.info("Shutdown Kafka producer");
+      }
   }
 }
