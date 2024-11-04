@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 import com.mycompany.myapp.ais.parser.AISDataBaseListener;
 import com.mycompany.myapp.shared.events.AISDataPojoEvent;
 
+/**
+ * Listener
+ */
 @Component
 public class AISDataBasePojoListener extends AISDataBaseListener {
 
