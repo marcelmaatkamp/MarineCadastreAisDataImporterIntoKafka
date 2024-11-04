@@ -11,11 +11,6 @@ import com.mycompany.myapp.ais.AISDataPojo;
 class KafkaConfiguration {
 
   @Bean
-  public KafkaConsumer<String, String> kafkaConsumer(KafkaProperties kafkaProperties) {
-    return new KafkaConsumer<>(kafkaProperties.getConsumer());
-  }
-
-  @Bean
   public KafkaProducer<String, AISDataPojo> kafkaProducer(KafkaProperties kafkaProperties) {
     return new KafkaProducer<>(kafkaProperties.getProducer());
   }

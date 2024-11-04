@@ -19,22 +19,11 @@ public class KafkaProperties {
   @Value("${kafka.polling.timeout:10000}")
   private Integer pollingTimeout;
 
-  private Map<String, Object> consumer = new HashMap<>();
-
   private Map<String, Object> producer = new HashMap<>();
 
   @PostConstruct
   public void init() {
-    consumer.computeIfAbsent(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, k -> bootstrapServers);
     producer.computeIfAbsent(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, k -> bootstrapServers);
-  }
-
-  public Map<String, Object> getConsumer() {
-    return this.consumer;
-  }
-
-  public void setConsumer(final Map<String, Object> consumer) {
-    this.consumer = consumer;
   }
 
   public Map<String, Object> getProducer() {

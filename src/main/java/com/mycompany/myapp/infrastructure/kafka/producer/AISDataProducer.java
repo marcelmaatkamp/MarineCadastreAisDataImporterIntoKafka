@@ -25,7 +25,7 @@ public class AISDataProducer implements ApplicationListener<AISDataPojoEvent> {
 
   private final String topicName;
 
-  public AISDataProducer(@Value("${kafka.topic.sample}") String topicName,
+  public AISDataProducer(@Value("${kafka.producer.topic}") String topicName,
       Producer<String, AISDataPojo> kafkaProducer) {
     this.kafkaProducer = kafkaProducer;
     this.topicName = topicName;
