@@ -1,7 +1,5 @@
 package com.mycompany.myapp.ais;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +14,7 @@ public class AISDataBasePojoListener extends AISDataBaseListener {
 
   private final List<AISDataPojo> aisDataPojos = new ArrayList<>();
 
-  DateTimeFormatter parser = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-
-  private ApplicationEventPublisher applicationEventPublisher;
+  private final ApplicationEventPublisher applicationEventPublisher;
 
   public AISDataBasePojoListener(ApplicationEventPublisher applicationEventPublisher) {
     this.applicationEventPublisher = applicationEventPublisher;
@@ -32,7 +28,7 @@ public class AISDataBasePojoListener extends AISDataBaseListener {
   public void exitRow(com.mycompany.myapp.ais.parser.AISDataParser.RowContext ctx) {
     AISDataPojo aisDataPojo = ImmutableAISDataPojo.builder().
       mmsi(Integer.valueOf(ctx.mmsi().getText())).
-      dateTime(LocalDateTime.parse(ctx.dateTime().getText(), parser)).
+      dateTime(ctx.dateTime().getText()+"Z").
       lat(Double.valueOf(ctx.lat().getText())).
       lon(Double.valueOf(ctx.lon().getText())).
       sog(Float.valueOf(ctx.sog().getText())).

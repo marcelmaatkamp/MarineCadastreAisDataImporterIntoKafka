@@ -1,18 +1,19 @@
 package com.mycompany.myapp.ais;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import org.immutables.value.Value;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.annotation.Nullable;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-
 @Value.Immutable
 public abstract class AISDataPojo {
   public abstract Integer mmsi();
-  public abstract LocalDateTime dateTime();
+  // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+  public abstract String dateTime();
   public abstract Double lat();
   public abstract Double lon();
   public abstract Float sog();
