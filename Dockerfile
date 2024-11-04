@@ -14,4 +14,4 @@ COPY --from=builder /application/target/jhipster-aiskafka-application-0.0.1-SNAP
 EXPOSE 8080
 # ENTRYPOINT exec java $JAVA_OPTS -jar jhipster-aiskafka-application-0.0.1-SNAPSHOT.jar
 # For Spring-Boot project, use the entrypoint below to reduce Tomcat startup time.
-ENTRYPOINT exec java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar jhipster-aiskafka-application-0.0.1-SNAPSHOT.jar
+ENTRYPOINT exec java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -cp /application:. -jar jhipster-aiskafka-application-0.0.1-SNAPSHOT.jar
