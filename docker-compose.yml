@@ -65,7 +65,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - 3000:3000
+      - 8082:8080
     volumes:
       - ./src/main/resources/ais.csv:/application/ais.csv
     environment:

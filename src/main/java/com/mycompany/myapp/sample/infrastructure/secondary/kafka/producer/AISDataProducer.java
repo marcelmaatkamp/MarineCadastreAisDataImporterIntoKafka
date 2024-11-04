@@ -1,19 +1,20 @@
 package com.mycompany.myapp.sample.infrastructure.secondary.kafka.producer;
 
 import java.util.concurrent.Future;
-import jakarta.annotation.PostConstruct;
+
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Repository;
 
-import org.springframework.context.ApplicationListener;
-import com.mycompany.myapp.shared.events.AISDataPojoEvent;
 import com.mycompany.myapp.ais.AISDataPojo;
+import com.mycompany.myapp.shared.events.AISDataPojoEvent;
 
+import jakarta.annotation.PostConstruct;
 
 @Repository
 public class AISDataProducer implements ApplicationListener<AISDataPojoEvent> {
@@ -24,7 +25,8 @@ public class AISDataProducer implements ApplicationListener<AISDataPojoEvent> {
 
   private final String topicName;
 
-  public AISDataProducer(@Value("${kafka.topic.sample}") String topicName, Producer<String, AISDataPojo> kafkaProducer) {
+  public AISDataProducer(@Value("${kafka.topic.sample}") String topicName,
+      Producer<String, AISDataPojo> kafkaProducer) {
     this.kafkaProducer = kafkaProducer;
     this.topicName = topicName;
   }
@@ -36,8 +38,8 @@ public class AISDataProducer implements ApplicationListener<AISDataPojoEvent> {
 
   @Override
   public void onApplicationEvent(AISDataPojoEvent aisDataPojoEvent) {
-      System.out.println("Received spring custom event - " + aisDataPojoEvent.getAISDataPojo());
-      send(aisDataPojoEvent.getAISDataPojo());
+    System.out.println("Received spring custom event - " + aisDataPojoEvent.getAISDataPojo());
+    send(aisDataPojoEvent.getAISDataPojo());
   }
 
   public Future<RecordMetadata> send(AISDataPojo aisDataPojo) {

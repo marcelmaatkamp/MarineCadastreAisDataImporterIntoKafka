@@ -1,7 +1,5 @@
 package com.mycompany.myapp.sample.infrastructure.primary.kafka.consumer;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.slf4j.Logger;
@@ -11,16 +9,18 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.task.SimpleAsyncTaskExecutor;
 import org.springframework.stereotype.Service;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
+
 @Service
 public class SampleConsumer extends AbstractConsumer<String> {
 
   private static final Logger log = LoggerFactory.getLogger(SampleConsumer.class);
 
   public SampleConsumer(
-    @Value("${kafka.topic.sample}") final String topicName,
-    @Value("${kafka.polling.timeout}") final int pollingTimeout,
-    final KafkaConsumer<String, String> kafkaConsumer
-  ) {
+      @Value("${kafka.topic.sample}") final String topicName,
+      @Value("${kafka.polling.timeout}") final int pollingTimeout,
+      final KafkaConsumer<String, String> kafkaConsumer) {
     super(topicName, pollingTimeout, kafkaConsumer);
   }
 
@@ -36,7 +36,8 @@ public class SampleConsumer extends AbstractConsumer<String> {
 
   @Override
   protected boolean handleMessage(final ConsumerRecord<String, String> consumerRecord) {
-    // /!\ Maybe you could delete the next log calls to avoid disclosing personal user information
+    // /!\ Maybe you could delete the next log calls to avoid disclosing personal
+    // user information
 
     final String value = consumerRecord.value();
 

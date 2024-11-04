@@ -1,7 +1,5 @@
 package com.mycompany.myapp.ais.config;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -9,6 +7,8 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -20,45 +20,34 @@ import com.mycompany.myapp.ais.parser.AISDataParser;
 @Configuration
 public class AISDataParserConfiguration {
 
-    @Bean
-    public File inputFile() throws IOException {
-        return new ClassPathResource("ais.csv").getFile();
+    public InputStream fileInputStream(String aisImporterFilename) throws IOException {
+        return new ClassPathResource(aisImporterFilename).getInputStream();
     }
 
-    @Bean
-    public InputStream fileInputStream() throws IOException {
-        return new FileInputStream(inputFile());
+    public CharStream charStream(String aisImporterFilename) throws IOException {
+        return CharStreams.fromStream(fileInputStream(aisImporterFilename));
     }
 
-    @Bean
-    public CharStream charStream() throws IOException {
-        return CharStreams.fromStream(fileInputStream());
+    public AISDataLexer aisDataLexer(String aisImporterFilename) throws IOException {
+        return new AISDataLexer(charStream(aisImporterFilename));
     }
 
-    @Bean
-    public AISDataLexer aisDataLexer() throws IOException {
-        return new AISDataLexer(charStream());
+    public CommonTokenStream commonTokenStream(String aisImporterFilename) throws IOException {
+        return new CommonTokenStream(aisDataLexer(aisImporterFilename));
     }
 
-    @Bean
-    public CommonTokenStream commonTokenStream() throws IOException {
-        return new CommonTokenStream(aisDataLexer());
+    AISDataBasePojoListener aisDataBasePojoListener(ApplicationEventPublisher applicationEventPublisher) {
+        return new AISDataBasePojoListener(applicationEventPublisher);
     }
 
-    @Bean
-    AISDataBasePojoListener aisDataBasePojoListener() {
-        return new AISDataBasePojoListener();
-    }
-
-    @Bean
-    public AISDataParser aisDataParser() throws IOException {
-        var parser = new AISDataParser(commonTokenStream());
-        parser.addParseListener(aisDataBasePojoListener());
+    public AISDataParser aisDataParser(ApplicationEventPublisher applicationEventPublisher, String aisImporterFilename) throws IOException {
+        var parser = new AISDataParser(commonTokenStream(aisImporterFilename));
+        parser.addParseListener(aisDataBasePojoListener(applicationEventPublisher));
         return parser;
     }
 
-    @Bean
-    ParseTree parserTree() throws IOException {
-        return aisDataParser().file();
+    @Bean 
+    ParseTree parserTree(ApplicationEventPublisher applicationEventPublisher, @Value("${application.input.filename}") String aisImporterFilename) throws IOException {
+        return aisDataParser(applicationEventPublisher, aisImporterFilename).file();
     }
 }
