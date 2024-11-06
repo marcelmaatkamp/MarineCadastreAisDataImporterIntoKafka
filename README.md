@@ -1,5 +1,7 @@
 # JHipster AIS Kafka Application
 
+The application's purpose is to import data files from the Marine Cadastre website, specifically those related to vessel traffic, and send them to a local Kafka server. The repository includes the source code, documentation, and instructions for setting up and running the application. The documentation highlights the use of a hexagonal architecture, the various package types within the application, and the importance of unit testing with assertions. It also provides details on the Apache Kafka technology used for data streaming.
+
 ## Prerequisites
 
 ### Java
