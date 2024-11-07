@@ -41,13 +41,17 @@ public class AISDataProducer implements ApplicationListener<AISDataPojoEvent> {
 
   @Override
   public void onApplicationEvent(AISDataPojoEvent aisDataPojoEvent) {
-    System.out.println("Received spring custom event - " + aisDataPojoEvent.getAISDataPojo());
+    if(log.isDebugEnabled()) {
+        log.debug("Received spring custom event - {}", aisDataPojoEvent.getAISDataPojo());
+    }
     send(aisDataPojoEvent.getAISDataPojo());
   }
 
   public Future<RecordMetadata> send(AISDataPojo aisDataPojo) {
     final ProducerRecord<String, AISDataPojo> producerRecord = new ProducerRecord<>(topicName, aisDataPojo);
-    log.info("Sending asynchronously a String producerRecord to topic: '{}'", topicName);
+    if(log.isDebugEnabled()) {
+      log.debug("Sending asynchronously a String producerRecord to topic: '{}'", topicName);
+    }
     return kafkaProducer.send(producerRecord);
   }
 
