@@ -17,6 +17,9 @@ The application's purpose is to import data files from the Marine Cadastre websi
 |538008717|2023-01-01T00:00:01|23.64963|-83.18562 |5.7 |269.0|274.0  |VELOS FORTUNA     |IMO9347310|V7A2686 |89        |0     |182   |32   |7.5  |89   |A               |
 |368261060|2023-01-01T00:00:06|30.51808|-91.22525 |9.8 |246.6|246.0  |AMERICAN SYMPHONY |          |        |60        |0     |100   |18   |0.0  |60   |A               |
 
+
+ ![Analysis](documentation/images/analysis.png)
+
 ## Prerequisites
 
 ### Java

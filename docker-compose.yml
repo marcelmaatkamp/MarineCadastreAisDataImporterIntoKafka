@@ -22,7 +22,7 @@ services:
       - "29092:29092"
       - "9092:9092"
       - "9644:9644"
-      - "8081:8081"
+      - "8083:8081"
     depends_on: [ ]
     volumes:
       - "redpanda:/var/lib/redpanda/data"
@@ -48,12 +48,12 @@ services:
             enabled: true
             urls: ["http://redpanda:8081"]
         connect:
-          enabled: true
+          enabled: false
           clusters:
             - name: datagen
               url: http://connect:8083
     ports:
-      - "8080:8080"
+      - "8084:8080"
     healthcheck: { test: "curl -f localhost:8080", interval: 1s, start_period: 30s }
     depends_on:
       redpanda:
@@ -61,11 +61,14 @@ services:
 
   importer:
     image: marcelmaatkamp/marinecadastreaisdataimporterintokafka:latest
+    depends_on:
+      redpanda:
+        condition: service_healthy
     build:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - 8082:8080
+      - 8085:8080
     volumes:
       - ./src/main/resources/ais.csv:/application/ais.csv
     environment:
