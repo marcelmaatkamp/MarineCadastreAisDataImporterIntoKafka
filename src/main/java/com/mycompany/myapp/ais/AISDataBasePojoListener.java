@@ -31,7 +31,7 @@ public class AISDataBasePojoListener extends AISDataBaseListener {
   public void exitRow(com.mycompany.myapp.ais.parser.AISDataParser.RowContext ctx) {
     AISDataPojo aisDataPojo = ImmutableAISDataPojo.builder().
       mmsi(Integer.valueOf(ctx.mmsi().getText())).
-      dateTime(ctx.dateTime().getText()).
+      dateTime(ctx.dateTime().getText()+"Z").
       lat(Double.valueOf(ctx.lat().getText())).
       lon(Double.valueOf(ctx.lon().getText())).
       sog(Float.valueOf(ctx.sog().getText())).
