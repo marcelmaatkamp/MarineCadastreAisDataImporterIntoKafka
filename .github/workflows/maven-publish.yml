@@ -9,7 +9,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -28,7 +27,7 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
- push_to_registries:
+  push_to_registries:
     name: Push Docker image to multiple registries
     runs-on: ubuntu-latest
     permissions:
