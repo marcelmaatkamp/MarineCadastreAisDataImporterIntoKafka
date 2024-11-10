@@ -36,18 +36,27 @@ public class AISDataParserConfiguration {
         return new CommonTokenStream(aisDataLexer(aisImporterFilename));
     }
 
-    AISDataBasePojoListener aisDataBasePojoListener(ApplicationEventPublisher applicationEventPublisher) {
-        return new AISDataBasePojoListener(applicationEventPublisher);
+    AISDataBasePojoListener aisDataBasePojoListener(
+        ApplicationEventPublisher applicationEventPublisher, 
+        boolean simulateRealtimeInserts) {
+        return new AISDataBasePojoListener(applicationEventPublisher, simulateRealtimeInserts);
     }
 
-    public AISDataParser aisDataParser(ApplicationEventPublisher applicationEventPublisher, String aisImporterFilename) throws IOException {
-        var parser = new AISDataParser(commonTokenStream(aisImporterFilename));
-        parser.addParseListener(aisDataBasePojoListener(applicationEventPublisher));
+    @Bean
+    public AISDataParser aisDataParser(
+        ApplicationEventPublisher applicationEventPublisher, 
+        @Value("${application.input.filename}") String aisImporterFilename, 
+        @Value("${application.simulateRealtimeInserts}") boolean simulateRealtimeInserts) throws IOException {
+        AISDataParser parser = new AISDataParser(commonTokenStream(aisImporterFilename));
+        parser.addParseListener(aisDataBasePojoListener(applicationEventPublisher, simulateRealtimeInserts));
         return parser;
     }
 
-    @Bean 
-    ParseTree parserTree(ApplicationEventPublisher applicationEventPublisher, @Value("${application.input.filename}") String aisImporterFilename) throws IOException {
-        return aisDataParser(applicationEventPublisher, aisImporterFilename).file();
+    @Bean
+    ParseTree parserTree(
+        ApplicationEventPublisher applicationEventPublisher, 
+        @Value("${application.input.filename}") String aisImporterFilename, 
+        @Value("${application.simulateRealtimeInserts}") boolean simulateRealtimeInserts) throws IOException {
+        return aisDataParser(applicationEventPublisher, aisImporterFilename, simulateRealtimeInserts).file();
     }
 }

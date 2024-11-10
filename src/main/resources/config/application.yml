@@ -9,7 +9,7 @@ spring:
     name: JhipsterAiskafkaApplication
   jackson:
     serialization:
-      FAIL_ON_EMPTY_BEANS: false
+      '[FAIL_ON_EMPTY_BEANS]': false
 kafka:
   bootstrap-servers: localhost:9092
   polling:
@@ -20,5 +20,6 @@ kafka:
     "[value.serializer]": org.springframework.kafka.support.serializer.JsonSerializer
 
 application:
+  simulateRealtimeInserts: true
   input:
     filename: ais.csv

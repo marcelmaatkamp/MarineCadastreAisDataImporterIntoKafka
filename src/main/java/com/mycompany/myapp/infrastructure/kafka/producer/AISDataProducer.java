@@ -40,7 +40,7 @@ public class AISDataProducer implements ApplicationListener<AISDataPojoEvent> {
   }
 
   @Override
-  public void onApplicationEvent(AISDataPojoEvent aisDataPojoEvent) {
+  public void onApplicationEvent(@SuppressWarnings("null") AISDataPojoEvent aisDataPojoEvent) {
     if(log.isDebugEnabled()) {
         log.debug("Received spring custom event - {}", aisDataPojoEvent.getAISDataPojo());
     }

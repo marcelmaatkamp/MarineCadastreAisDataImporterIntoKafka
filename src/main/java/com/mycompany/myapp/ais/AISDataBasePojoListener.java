@@ -1,10 +1,9 @@
 package com.mycompany.myapp.ais;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Duration;
+import java.time.Instant;
 
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.stereotype.Component;
 
 import com.mycompany.myapp.ais.parser.AISDataBaseListener;
 import com.mycompany.myapp.shared.events.AISDataPojoEvent;
@@ -12,19 +11,17 @@ import com.mycompany.myapp.shared.events.AISDataPojoEvent;
 /**
  * Listener
  */
-@Component
 public class AISDataBasePojoListener extends AISDataBaseListener {
 
-  private final List<AISDataPojo> aisDataPojos = new ArrayList<>();
-
   private final ApplicationEventPublisher applicationEventPublisher;
+  private final boolean simulateRealtimeInserts;
 
-  public AISDataBasePojoListener(ApplicationEventPublisher applicationEventPublisher) {
+  // SortedMap<Instant, AISDataPojo> sortedEventsByDatTimeButAheadOfTime = new TreeMap<>();
+  Long offsetInTimeBetweenImportedDataAndNow;
+
+  public AISDataBasePojoListener(ApplicationEventPublisher applicationEventPublisher, boolean simulateRealtimeInserts) {
     this.applicationEventPublisher = applicationEventPublisher;
-  }
-
-  public List<AISDataPojo> getAisDataPojos() {
-    return aisDataPojos;
+    this.simulateRealtimeInserts = simulateRealtimeInserts;
   }
 
   @Override
@@ -48,8 +45,27 @@ public class AISDataBasePojoListener extends AISDataBaseListener {
       cargo(ctx.cargo() != null && !ctx.cargo().isEmpty() ? ctx.cargo().getText() : null).
       transceiverClass(ctx.transceiverClass() != null && !ctx.transceiverClass().isEmpty() ? ctx.transceiverClass().getText() : null).
       build();
-    aisDataPojos.add(aisDataPojo);
-    sendToKafka(aisDataPojo);
+
+      if(simulateRealtimeInserts) { 
+      Instant timeOfEvent = Instant.parse(ctx.dateTime().getText()+"Z");
+      if(offsetInTimeBetweenImportedDataAndNow == null) { 
+        offsetInTimeBetweenImportedDataAndNow = Instant.now().getEpochSecond() - timeOfEvent.getEpochSecond();
+      }
+
+      // naive but 'good enough' implementation for now
+      Instant nowButInThePast = Instant.now().minusSeconds(offsetInTimeBetweenImportedDataAndNow);
+      int difference = timeOfEvent.compareTo(nowButInThePast);
+      if(difference < 0) { 
+        try {
+            Thread.sleep(Duration.ofSeconds(difference));
+        } catch (InterruptedException ex) {
+
+        }
+      }
+    
+      sendToKafka(aisDataPojo);
+      // sortedEventsByDatTimeButAheadOfTime.put(Instant.parse(ctx.dateTime().getText()), aisDataPojo);  
+    }
   }
 
   private void sendToKafka(AISDataPojo aisDataPojo) { 
