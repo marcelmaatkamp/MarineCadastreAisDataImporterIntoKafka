@@ -6,7 +6,6 @@ import java.io.InputStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTree;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
@@ -20,8 +19,12 @@ import com.mycompany.myapp.ais.parser.AISDataParser;
 @Configuration
 public class AISDataParserConfiguration {
 
+    public ClassPathResource ClassPathResource(String aisImporterFilename) {
+        return new ClassPathResource(aisImporterFilename);
+    }
+
     public InputStream fileInputStream(String aisImporterFilename) throws IOException {
-        return new ClassPathResource(aisImporterFilename).getInputStream();
+        return getClass().getResourceAsStream(aisImporterFilename);
     }
 
     public CharStream charStream(String aisImporterFilename) throws IOException {
@@ -50,13 +53,5 @@ public class AISDataParserConfiguration {
         AISDataParser parser = new AISDataParser(commonTokenStream(aisImporterFilename));
         parser.addParseListener(aisDataBasePojoListener(applicationEventPublisher, simulateRealtimeInserts));
         return parser;
-    }
-
-    @Bean
-    ParseTree parserTree(
-        ApplicationEventPublisher applicationEventPublisher, 
-        @Value("${application.input.filename}") String aisImporterFilename, 
-        @Value("${application.simulateRealtimeInserts}") boolean simulateRealtimeInserts) throws IOException {
-        return aisDataParser(applicationEventPublisher, aisImporterFilename, simulateRealtimeInserts).file();
     }
 }

@@ -61,6 +61,8 @@ services:
 
   importer:
     image: marcelmaatkamp/marinecadastreaisdataimporterintokafka:latest
+    # entrypoint: bash
+    # command: -c 'sleep 10000'
     depends_on:
       redpanda:
         condition: service_healthy
@@ -70,9 +72,10 @@ services:
     ports:
       - 8085:8080
     volumes:
-      - ./src/main/resources/ais.csv:/application/ais.csv
+      - ~/AIS_2024_01_01.csv:/application/AIS_2024_01_01.csv
     environment:
       KAFKA_BOOTSTRAP_SERVERS: redpanda:29092
+      application.input.filename: /application/AIS_2024_01_01.csv
 
 volumes:
   redpanda:
