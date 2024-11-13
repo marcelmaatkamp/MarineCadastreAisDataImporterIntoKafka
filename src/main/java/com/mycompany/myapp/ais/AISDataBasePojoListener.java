@@ -1,7 +1,10 @@
 package com.mycompany.myapp.ais;
 
+import java.util.concurrent.TimeUnit;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 
 import com.mycompany.myapp.ais.parser.AISDataBaseListener;
@@ -15,6 +18,7 @@ public class AISDataBasePojoListener extends AISDataBaseListener {
 
   private final ApplicationEventPublisher applicationEventPublisher;
   private final boolean simulateRealtimeInserts;
+  @Value("${application.simulateRealtimeInserts.millisToWait}") int millisToWait;
 
   // SortedMap<Instant, AISDataPojo> sortedEventsByDatTimeButAheadOfTime = new
   // TreeMap<>();
@@ -48,6 +52,15 @@ public class AISDataBasePojoListener extends AISDataBaseListener {
         build();
 
         sendToKafka(aisDataPojo);
+
+        if(simulateRealtimeInserts) { 
+            try {
+              TimeUnit.MICROSECONDS.sleep(millisToWait);
+            } catch (InterruptedException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+            }
+        }
     }
 
   private void sendToKafka(AISDataPojo aisDataPojo) {

@@ -69,7 +69,7 @@ public class AISDataParserConfiguration {
     FileContext parserTree(
         ApplicationEventPublisher applicationEventPublisher, 
         @Value("${application.input.filename}") String aisImporterFilename, 
-        @Value("${application.simulateRealtimeInserts}") boolean simulateRealtimeInserts) throws IOException {
+        @Value("${application.simulateRealtimeInserts.enabled}") boolean simulateRealtimeInserts) throws IOException {
         return aisDataParser(applicationEventPublisher, aisImporterFilename, simulateRealtimeInserts).file();
     }
 }

@@ -20,7 +20,9 @@ kafka:
     "[value.serializer]": org.springframework.kafka.support.serializer.JsonSerializer
 
 application:
-  simulateRealtimeInserts: true
+  simulateRealtimeInserts: 
+    enabled: true
+    millisToWait: 30
   input:
     # filename: src/main/resources/ais.csv
     filename: src/main/resources/ais_500000.csv
