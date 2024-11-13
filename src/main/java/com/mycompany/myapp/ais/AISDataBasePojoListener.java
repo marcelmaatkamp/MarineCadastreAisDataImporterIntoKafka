@@ -1,11 +1,10 @@
 package com.mycompany.myapp.ais;
 
-import java.util.concurrent.TimeUnit;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.stereotype.Component;
 
 import com.mycompany.myapp.ais.parser.AISDataBaseListener;
 import com.mycompany.myapp.shared.events.AISDataPojoEvent;
@@ -18,15 +17,16 @@ public class AISDataBasePojoListener extends AISDataBaseListener {
 
   private final ApplicationEventPublisher applicationEventPublisher;
   private final boolean simulateRealtimeInserts;
-  @Value("${application.simulateRealtimeInserts.millisToWait}") int millisToWait;
+  int millisToWait;
 
   // SortedMap<Instant, AISDataPojo> sortedEventsByDatTimeButAheadOfTime = new
   // TreeMap<>();
   Long offsetInTimeBetweenImportedDataAndNow;
 
-  public AISDataBasePojoListener(ApplicationEventPublisher applicationEventPublisher, boolean simulateRealtimeInserts) {
+  public AISDataBasePojoListener(ApplicationEventPublisher applicationEventPublisher, boolean simulateRealtimeInserts, int millisToWait) {
     this.applicationEventPublisher = applicationEventPublisher;
     this.simulateRealtimeInserts = simulateRealtimeInserts;
+    this.millisToWait = millisToWait;
   }
 
   @Override
@@ -55,10 +55,9 @@ public class AISDataBasePojoListener extends AISDataBaseListener {
 
         if(simulateRealtimeInserts) { 
             try {
-              TimeUnit.MICROSECONDS.sleep(millisToWait);
+              Thread.sleep(millisToWait);
             } catch (InterruptedException e) {
-              // TODO Auto-generated catch block
-              e.printStackTrace();
+               
             }
         }
     }

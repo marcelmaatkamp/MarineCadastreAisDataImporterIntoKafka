@@ -52,16 +52,17 @@ public class AISDataParserConfiguration {
 
     AISDataBasePojoListener aisDataBasePojoListener(
         ApplicationEventPublisher applicationEventPublisher, 
-        boolean simulateRealtimeInserts) {
-        return new AISDataBasePojoListener(applicationEventPublisher, simulateRealtimeInserts);
+        boolean simulateRealtimeInserts, 
+        int millisToWait) {
+        return new AISDataBasePojoListener(applicationEventPublisher, simulateRealtimeInserts, millisToWait);
     }
 
     public AISDataParser aisDataParser(
         ApplicationEventPublisher applicationEventPublisher, 
         String aisImporterFilename, 
-        boolean simulateRealtimeInserts) throws IOException {
+        boolean simulateRealtimeInserts, int millisToWait) throws IOException {
         AISDataParser parser = new AISDataParser(commonTokenStream(aisImporterFilename));
-        parser.addParseListener(aisDataBasePojoListener(applicationEventPublisher, simulateRealtimeInserts));
+        parser.addParseListener(aisDataBasePojoListener(applicationEventPublisher, simulateRealtimeInserts, millisToWait));
         return parser;
     }
     
@@ -69,7 +70,8 @@ public class AISDataParserConfiguration {
     FileContext parserTree(
         ApplicationEventPublisher applicationEventPublisher, 
         @Value("${application.input.filename}") String aisImporterFilename, 
-        @Value("${application.simulateRealtimeInserts.enabled}") boolean simulateRealtimeInserts) throws IOException {
-        return aisDataParser(applicationEventPublisher, aisImporterFilename, simulateRealtimeInserts).file();
+        @Value("${application.simulateRealtimeInserts.enabled}") boolean simulateRealtimeInserts,
+        @Value("${application.simulateRealtimeInserts.millisToWait}") int millisToWait) throws IOException {
+        return aisDataParser(applicationEventPublisher, aisImporterFilename, simulateRealtimeInserts, millisToWait).file();
     }
 }

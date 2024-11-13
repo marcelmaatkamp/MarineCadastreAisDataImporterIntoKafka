@@ -22,7 +22,7 @@ kafka:
 application:
   simulateRealtimeInserts: 
     enabled: true
-    millisToWait: 30
+    millisToWait: 300
   input:
     # filename: src/main/resources/ais.csv
     filename: src/main/resources/ais_500000.csv

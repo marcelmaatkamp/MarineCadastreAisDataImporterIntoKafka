@@ -17,10 +17,5 @@ public class JhipsterSampleApplicationApp {
 
   public static void main(String[] args) throws IOException {
     var configurableApplicationContext = SpringApplication.run(JhipsterSampleApplicationApp.class, args);
-    var env = configurableApplicationContext.getEnvironment();
-
-    if (log.isInfoEnabled()) {
-      log.info(ApplicationStartupTraces.of(env));
-    }
   }
 }
