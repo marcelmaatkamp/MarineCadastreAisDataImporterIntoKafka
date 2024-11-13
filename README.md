@@ -4,6 +4,8 @@ The application's purpose is to import data files from the Marine Cadastre websi
 
 # Example 
 
+https://hub.marinecadastre.gov/pages/vesseltraffic
+
 |MMSI     |BaseDateTime       |LAT     |LON       |SOG |COG  |Heading|VesselName        |IMO       |CallSign|VesselType|Status|Length|Width|Draft|Cargo|TransceiverClass|
 |---------|-------------------|--------|----------|----|-----|-------|------------------|----------|--------|----------|------|------|-----|-----|-----|----------------|
 |368926035|2023-01-01T00:00:05|38.65165|90.17964  |0.1 |360.0|511.0  |KIMMSWICK         |          |AENA    |33        |15    |      |     |     |33   |A               |

@@ -72,7 +72,7 @@ services:
     ports:
       - 8085:8080
     volumes:
-      - ~/AIS_2024_01_01.csv:/application/AIS_2024_01_01.csv
+      - ./AIS_2024_01_01.csv:/application/AIS_2024_01_01.csv
     environment:
       KAFKA_BOOTSTRAP_SERVERS: redpanda:29092
       application.input.filename: /application/AIS_2024_01_01.csv

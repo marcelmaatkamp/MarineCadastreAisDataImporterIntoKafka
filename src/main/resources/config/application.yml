@@ -11,7 +11,7 @@ spring:
     serialization:
       '[FAIL_ON_EMPTY_BEANS]': false
 kafka:
-  bootstrap-servers: localhost:9092
+  bootstrap-servers: localhost:29092
   polling:
     timeout: 10000
   producer:
@@ -22,4 +22,6 @@ kafka:
 application:
   simulateRealtimeInserts: true
   input:
-    filename: ais.csv
+    # filename: src/main/resources/ais.csv
+    filename: src/main/resources/ais_500.csv
+    # filename: AIS_2024_01_01.csv
