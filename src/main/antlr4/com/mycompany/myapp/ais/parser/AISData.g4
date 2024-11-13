@@ -30,11 +30,11 @@ lon: FLOAT;
 sog: FLOAT;
 cog: FLOAT;
 heading: FLOAT;
-vesselName: TEXT;
-imo: TEXT;
-callSign: TEXT;
-vesselType: NUMBER;
-status: NUMBER;
+vesselName: TEXT? | LETTER | NUMBER;
+imo: TEXT? | LETTER | NUMBER ;
+callSign: TEXT? | LETTER | NUMBER;
+vesselType: SIGN? | NUMBER ;
+status: SIGN? | NUMBER;
 length: NUMBER;
 width: NUMBER;
 draft: FLOAT;
@@ -61,6 +61,6 @@ SECOND : DIGIT DIGIT ;
 fragment DIGIT : [0-9] ;
 LETTER: [a-zA-Z] ;
 
-TEXT: [a-zA-Z0-9 '\-''_''.''!']+;
+TEXT: [a-zA-Z0-9 '\-''_''.''!''%''&''/''('''"')''+''#''\\'';''^'':''?''\[''\]']+;
 
 WS: [\t]+ -> skip;
