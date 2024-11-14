@@ -1,4 +1,4 @@
-// Generated from com/mycompany/myapp/ais/parser/AISData.g4 by ANTLR 4.13.1
+// Generated from com/mycompany/myapp/ais/parser/AISData.g4 by ANTLR 4.13.2
 package com.mycompany.myapp.ais.parser;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Iterator;
 import java.util.ArrayList;
 
-@SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast", "CheckReturnValue"})
+@SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast", "CheckReturnValue", "this-escape"})
 public class AISDataParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.13.1", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.13.2", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -123,6 +123,11 @@ public class AISDataParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof AISDataListener ) ((AISDataListener)listener).exitFile(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AISDataVisitor ) return ((AISDataVisitor<? extends T>)visitor).visitFile(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final FileContext file() throws RecognitionException {
@@ -180,6 +185,11 @@ public class AISDataParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof AISDataListener ) ((AISDataListener)listener).exitHeader(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AISDataVisitor ) return ((AISDataVisitor<? extends T>)visitor).visitHeader(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -297,6 +307,11 @@ public class AISDataParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof AISDataListener ) ((AISDataListener)listener).exitRow(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AISDataVisitor ) return ((AISDataVisitor<? extends T>)visitor).visitRow(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -477,6 +492,11 @@ public class AISDataParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof AISDataListener ) ((AISDataListener)listener).exitMmsi(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AISDataVisitor ) return ((AISDataVisitor<? extends T>)visitor).visitMmsi(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final MmsiContext mmsi() throws RecognitionException {
@@ -514,6 +534,11 @@ public class AISDataParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof AISDataListener ) ((AISDataListener)listener).exitDateTime(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AISDataVisitor ) return ((AISDataVisitor<? extends T>)visitor).visitDateTime(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -553,6 +578,11 @@ public class AISDataParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof AISDataListener ) ((AISDataListener)listener).exitLat(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AISDataVisitor ) return ((AISDataVisitor<? extends T>)visitor).visitLat(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final LatContext lat() throws RecognitionException {
@@ -590,6 +620,11 @@ public class AISDataParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof AISDataListener ) ((AISDataListener)listener).exitLon(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AISDataVisitor ) return ((AISDataVisitor<? extends T>)visitor).visitLon(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -629,6 +664,11 @@ public class AISDataParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof AISDataListener ) ((AISDataListener)listener).exitSog(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AISDataVisitor ) return ((AISDataVisitor<? extends T>)visitor).visitSog(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final SogContext sog() throws RecognitionException {
@@ -667,6 +707,11 @@ public class AISDataParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof AISDataListener ) ((AISDataListener)listener).exitCog(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AISDataVisitor ) return ((AISDataVisitor<? extends T>)visitor).visitCog(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final CogContext cog() throws RecognitionException {
@@ -704,6 +749,11 @@ public class AISDataParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof AISDataListener ) ((AISDataListener)listener).exitHeading(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AISDataVisitor ) return ((AISDataVisitor<? extends T>)visitor).visitHeading(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -744,6 +794,11 @@ public class AISDataParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof AISDataListener ) ((AISDataListener)listener).exitVesselName(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AISDataVisitor ) return ((AISDataVisitor<? extends T>)visitor).visitVesselName(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -817,6 +872,11 @@ public class AISDataParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof AISDataListener ) ((AISDataListener)listener).exitImo(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AISDataVisitor ) return ((AISDataVisitor<? extends T>)visitor).visitImo(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final ImoContext imo() throws RecognitionException {
@@ -889,6 +949,11 @@ public class AISDataParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof AISDataListener ) ((AISDataListener)listener).exitCallSign(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AISDataVisitor ) return ((AISDataVisitor<? extends T>)visitor).visitCallSign(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final CallSignContext callSign() throws RecognitionException {
@@ -960,6 +1025,11 @@ public class AISDataParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof AISDataListener ) ((AISDataListener)listener).exitVesselType(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AISDataVisitor ) return ((AISDataVisitor<? extends T>)visitor).visitVesselType(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final VesselTypeContext vesselType() throws RecognitionException {
@@ -1024,6 +1094,11 @@ public class AISDataParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof AISDataListener ) ((AISDataListener)listener).exitStatus(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AISDataVisitor ) return ((AISDataVisitor<? extends T>)visitor).visitStatus(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final StatusContext status() throws RecognitionException {
@@ -1087,6 +1162,11 @@ public class AISDataParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof AISDataListener ) ((AISDataListener)listener).exitLength(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AISDataVisitor ) return ((AISDataVisitor<? extends T>)visitor).visitLength(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final LengthContext length() throws RecognitionException {
@@ -1124,6 +1204,11 @@ public class AISDataParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof AISDataListener ) ((AISDataListener)listener).exitWidth(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AISDataVisitor ) return ((AISDataVisitor<? extends T>)visitor).visitWidth(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1163,6 +1248,11 @@ public class AISDataParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof AISDataListener ) ((AISDataListener)listener).exitDraft(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AISDataVisitor ) return ((AISDataVisitor<? extends T>)visitor).visitDraft(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final DraftContext draft() throws RecognitionException {
@@ -1201,6 +1291,11 @@ public class AISDataParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof AISDataListener ) ((AISDataListener)listener).exitCargo(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AISDataVisitor ) return ((AISDataVisitor<? extends T>)visitor).visitCargo(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final CargoContext cargo() throws RecognitionException {
@@ -1238,6 +1333,11 @@ public class AISDataParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof AISDataListener ) ((AISDataListener)listener).exitTransceiverClass(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AISDataVisitor ) return ((AISDataVisitor<? extends T>)visitor).visitTransceiverClass(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 

@@ -349,15 +349,18 @@
       <plugin>
         <groupId>org.antlr</groupId>
         <artifactId>antlr4-maven-plugin</artifactId>
-        <version>4.13.1</version>
+        <version>4.13.2</version>
         <configuration>
           <outputDirectory>
             src/main/java
           </outputDirectory>
+          <listener>true</listener>
+          <visitor>true</visitor>
         </configuration>
         <executions>
           <execution>
             <id>antlr</id>
+            <phase>none</phase>
             <goals>
               <goal>antlr4</goal>
             </goals>
