@@ -11,7 +11,7 @@ spring:
     serialization:
       '[FAIL_ON_EMPTY_BEANS]': false
 kafka:
-  bootstrap-servers: localhost:29092
+  bootstrap-servers: localhost:9092
   polling:
     timeout: 10000
   producer:
