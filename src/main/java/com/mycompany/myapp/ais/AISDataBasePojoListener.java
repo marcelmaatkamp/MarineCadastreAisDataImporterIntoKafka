@@ -1,10 +1,11 @@
 package com.mycompany.myapp.ais;
 
+import java.time.Duration;
+import java.time.Instant;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.stereotype.Component;
 
 import com.mycompany.myapp.ais.parser.AISDataBaseListener;
 import com.mycompany.myapp.shared.events.AISDataPojoEvent;
@@ -50,7 +51,36 @@ public class AISDataBasePojoListener extends AISDataBaseListener {
         cargo(ctx.cargo() != null && !ctx.cargo().getText().isEmpty() ? ctx.cargo().getText() : null).
         transceiverClass(ctx.transceiverClass() != null && !ctx.transceiverClass().isEmpty() ? ctx.transceiverClass().getText() : null).
         build();
+        
+        /*
+        if(sleepOnTimeDifference) { 
+          Instant timeOfEvent = Instant.parse(ctx.dateTime().getText()+"Z");
+          if(offsetInTimeBetweenImportedDataAndNow == null) { 
+            offsetInTimeBetweenImportedDataAndNow = Instant.now().getEpochSecond() - timeOfEvent.getEpochSecond();
+            log.info("offsetInTimeBetweenImportedDataAndNow: {}", offsetInTimeBetweenImportedDataAndNow);
+          }
 
+          Instant nowButInThePast = Instant.now().minusSeconds(offsetInTimeBetweenImportedDataAndNow);
+          int difference = timeOfEvent.compareTo(nowButInThePast);
+          log.info("going to sleep for {}", difference);
+          if(difference < 0) { 
+            
+            try {
+                Thread.sleep(Duration.ofSeconds(difference));
+            } catch (InterruptedException ex) {
+
+            }
+          }
+          // sortedEventsByDatTimeButAheadOfTime.put(Instant.parse(ctx.dateTime().getText()), aisDataPojo);  
+        } else if(simulateRealtimeInserts) { 
+            try {
+              Thread.sleep(millisToWait);
+            } catch (InterruptedException e) {
+               
+            }
+          }
+        }
+        */
         sendToKafka(aisDataPojo);
 
         if(simulateRealtimeInserts) { 
