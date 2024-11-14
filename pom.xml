@@ -360,7 +360,7 @@
         <executions>
           <execution>
             <id>antlr</id>
-            <phase>none</phase>
+           
             <goals>
               <goal>antlr4</goal>
             </goals>
