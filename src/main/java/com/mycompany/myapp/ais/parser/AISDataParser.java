@@ -18,7 +18,7 @@ public class AISDataParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		HEADER_TEXT=1, COMMA=2, NEWLINE=3, IMO_NUMBER=4, DATETIME=5, FLOAT=6, 
-		NUMBER=7, STRING_FIELD=8, LETTER=9, WS=10;
+		NUMBER=7, LETTER=8, STRING_FIELD=9, WS=10;
 	public static final int
 		RULE_file = 0, RULE_header = 1, RULE_row = 2, RULE_mmsi = 3, RULE_dateTime = 4, 
 		RULE_lat = 5, RULE_lon = 6, RULE_sog = 7, RULE_cog = 8, RULE_heading = 9, 
@@ -44,7 +44,7 @@ public class AISDataParser extends Parser {
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, "HEADER_TEXT", "COMMA", "NEWLINE", "IMO_NUMBER", "DATETIME", "FLOAT", 
-			"NUMBER", "STRING_FIELD", "LETTER", "WS"
+			"NUMBER", "LETTER", "STRING_FIELD", "WS"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -328,7 +328,7 @@ public class AISDataParser extends Parser {
 			setState(67);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if (_la==NUMBER || _la==STRING_FIELD) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 896L) != 0)) {
 				{
 				setState(66);
 				vesselName();
@@ -352,7 +352,7 @@ public class AISDataParser extends Parser {
 			setState(75);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if (_la==NUMBER || _la==STRING_FIELD) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 896L) != 0)) {
 				{
 				setState(74);
 				callSign();
@@ -753,6 +753,7 @@ public class AISDataParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class VesselNameContext extends ParserRuleContext {
+		public TerminalNode LETTER() { return getToken(AISDataParser.LETTER, 0); }
 		public TerminalNode STRING_FIELD() { return getToken(AISDataParser.STRING_FIELD, 0); }
 		public TerminalNode NUMBER() { return getToken(AISDataParser.NUMBER, 0); }
 		public VesselNameContext(ParserRuleContext parent, int invokingState) {
@@ -783,7 +784,7 @@ public class AISDataParser extends Parser {
 			{
 			setState(119);
 			_la = _input.LA(1);
-			if ( !(_la==NUMBER || _la==STRING_FIELD) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 896L) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -849,6 +850,7 @@ public class AISDataParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class CallSignContext extends ParserRuleContext {
+		public TerminalNode LETTER() { return getToken(AISDataParser.LETTER, 0); }
 		public TerminalNode STRING_FIELD() { return getToken(AISDataParser.STRING_FIELD, 0); }
 		public TerminalNode NUMBER() { return getToken(AISDataParser.NUMBER, 0); }
 		public CallSignContext(ParserRuleContext parent, int invokingState) {
@@ -879,7 +881,7 @@ public class AISDataParser extends Parser {
 			{
 			setState(123);
 			_la = _input.LA(1);
-			if ( !(_la==NUMBER || _la==STRING_FIELD) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 896L) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -1226,7 +1228,7 @@ public class AISDataParser extends Parser {
 		"\u0011\u0001\u0011\u0001\u0012\u0001\u0012\u0001\u0013\u0001\u0013\u0001"+
 		"\u0013\u0000\u0000\u0014\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012"+
 		"\u0014\u0016\u0018\u001a\u001c\u001e \"$&\u0000\u0001\u0001\u0000\u0007"+
-		"\b\u0081\u0000(\u0001\u0000\u0000\u0000\u00021\u0001\u0000\u0000\u0000"+
+		"\t\u0081\u0000(\u0001\u0000\u0000\u0000\u00021\u0001\u0000\u0000\u0000"+
 		"\u00044\u0001\u0000\u0000\u0000\u0006i\u0001\u0000\u0000\u0000\bk\u0001"+
 		"\u0000\u0000\u0000\nm\u0001\u0000\u0000\u0000\fo\u0001\u0000\u0000\u0000"+
 		"\u000eq\u0001\u0000\u0000\u0000\u0010s\u0001\u0000\u0000\u0000\u0012u"+
@@ -1275,7 +1277,7 @@ public class AISDataParser extends Parser {
 		"\u0001\u0000\u0000\u0000\u0083\u0084\u0005\u0007\u0000\u0000\u0084!\u0001"+
 		"\u0000\u0000\u0000\u0085\u0086\u0005\u0006\u0000\u0000\u0086#\u0001\u0000"+
 		"\u0000\u0000\u0087\u0088\u0005\u0007\u0000\u0000\u0088%\u0001\u0000\u0000"+
-		"\u0000\u0089\u008a\u0005\t\u0000\u0000\u008a\'\u0001\u0000\u0000\u0000"+
+		"\u0000\u0089\u008a\u0005\b\u0000\u0000\u008a\'\u0001\u0000\u0000\u0000"+
 		"\n,CGKOSW[_c";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());

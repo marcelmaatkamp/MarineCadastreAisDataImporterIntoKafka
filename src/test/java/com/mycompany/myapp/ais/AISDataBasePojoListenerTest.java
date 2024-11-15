@@ -94,6 +94,13 @@ class AISDataBasePojoListenerTest {
         verifyPublishEventAndFieldsAreTheSameForInput(input);
     }
 
+    // 338488866,2024-01-01T00:00:07,47.30552,-122.51234,1.2,360.0,511.0,A,IMO0000000,,37,,12,4,,,B
+    @Test
+    void testRowWithVesselNameAsLetter() {
+        String input = "338488866,2024-01-01T00:00:07,47.30552,-122.51234,1.2,360.0,511.0,A,IMO0000000,,37,,12,4,,,B";
+        verifyPublishEventAndFieldsAreTheSameForInput(input);
+    }
+
     private void verifyPublishEventAndFieldsAreTheSameForInput(String input) {
         var pojo = fromCSV(input);
         parseAndWalk(toCSVLine(pojo));
