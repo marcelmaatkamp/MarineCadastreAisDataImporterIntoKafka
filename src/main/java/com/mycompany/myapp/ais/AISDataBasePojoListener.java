@@ -38,6 +38,13 @@ public class AISDataBasePojoListener extends AISDataBaseListener {
     this.appendZToDateTime = appendZToDateTime;
   }
 
+  private String getValue(String value) { 
+    if(value == null || value.isEmpty() || value.equals("null")) { 
+      return null;
+    }
+    return value;
+  }
+
   @Override
   public void exitRow(com.mycompany.myapp.ais.parser.AISDataParser.RowContext ctx) {
       AISDataPojo aisDataPojo = ImmutableAISDataPojo.builder().
@@ -48,10 +55,10 @@ public class AISDataBasePojoListener extends AISDataBaseListener {
         sog(Float.valueOf(ctx.sog().getText())).
         cog(Float.valueOf(ctx.cog().getText())).
         heading(Float.valueOf(ctx.heading().getText())).
-        vesselName(ctx.vesselName() != null && !ctx.vesselName().isEmpty() && !ctx.vesselName().getText().isEmpty() ? ctx.vesselName().getText() : null).
+        vesselName(ctx.vesselName() != null && !ctx.vesselName().isEmpty() ? getValue(ctx.vesselName().getText()) : null).
         imo(ctx.imo() != null && !ctx.imo().isEmpty() ? ctx.imo().getText() : null).
-        callSign(ctx.callSign() != null && !ctx.callSign().isEmpty() && !ctx.callSign().getText().isEmpty() && !ctx.callSign().getText().equals("") ? ctx.callSign().getText() : null).
-        vesselType( ctx.vesselType() != null && !ctx.vesselType().getText().isEmpty() && !ctx.vesselType().getText().equals("-") ? Short.valueOf(ctx.vesselType().getText()) : null).
+        callSign(ctx.callSign() != null && !ctx.callSign().isEmpty() ? getValue(ctx.callSign().getText()) : null).
+        vesselType(ctx.vesselType() != null && !ctx.vesselType().getText().isEmpty() && !ctx.vesselType().getText().equals("-") ? Short.valueOf(ctx.vesselType().getText()) : null).
         status(ctx.status() != null && !ctx.status().getText().isEmpty() ? Short.valueOf(ctx.status().getText()) : null).
         length(ctx.length() != null && !ctx.length().getText().isEmpty() ? Short.valueOf(ctx.length().getText()) : null).
         width(ctx.width() != null && !ctx.width().getText().isEmpty() ? Short.valueOf(ctx.width().getText()) : null).
@@ -59,7 +66,6 @@ public class AISDataBasePojoListener extends AISDataBaseListener {
         cargo(ctx.cargo() != null && !ctx.cargo().getText().isEmpty() ? ctx.cargo().getText() : null).
         transceiverClass(ctx.transceiverClass() != null && !ctx.transceiverClass().isEmpty() ? ctx.transceiverClass().getText() : null).
         build();
-              
         /*
         if(sleepOnTimeDifference) { 
           Instant timeOfEvent = Instant.parse(ctx.dateTime().getText()+"Z");

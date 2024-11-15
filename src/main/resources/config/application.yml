@@ -1,0 +1,29 @@
+logging:
+  level:
+    com:
+      mycompany:
+        myapp: INFO
+        ais: INFO
+spring:
+  application:
+    name: JhipsterAiskafkaApplication
+  jackson:
+    serialization:
+      '[FAIL_ON_EMPTY_BEANS]': false
+kafka:
+  bootstrap-servers: localhost:9092
+  polling:
+    timeout: 10000
+  producer:
+    topic: ais-data
+    "[key.serializer]": org.apache.kafka.common.serialization.StringSerializer
+    "[value.serializer]": org.springframework.kafka.support.serializer.JsonSerializer
+application:
+  simulateRealtimeInserts: 
+    enabled: true
+    millisToWait: 0
+  input:
+    filename: src/main/resources/ais.csv
+  appendZToDateTime: true
+    # filename: src/main/resources/ais_500000.csv
+    # filename: AIS_2024_01_01.csv
