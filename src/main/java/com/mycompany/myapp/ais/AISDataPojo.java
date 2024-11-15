@@ -25,6 +25,7 @@ public abstract class AISDataPojo {
 
   public abstract Float heading();
 
+  @Nullable
   public abstract String vesselName();
 
   @Nullable

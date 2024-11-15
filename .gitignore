@@ -4,3 +4,4 @@ node_modules/
 target/*
 .idea/
 AIS_2024_01_01.csv
+.vscode/

@@ -24,6 +24,7 @@ application:
     enabled: true
     millisToWait: 0
   input:
-    filename: src/main/resources/ais.csv
+    filename: src/main/resources/ais_1000.csv
+  appendZToDateTime: true
     # filename: src/main/resources/ais_500000.csv
     # filename: AIS_2024_01_01.csv

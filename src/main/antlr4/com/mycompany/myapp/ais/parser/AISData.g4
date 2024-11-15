@@ -1,27 +1,28 @@
 grammar AISData;
 
-file:  header row* EOF;
+// Parser Rules
+file: header row* EOF;
 
-header: TEXT (',' TEXT)* '\r'? '\n';
+header: HEADER_TEXT NEWLINE;
 
 row:
-  mmsi ','
-  dateTime ','
-  lat ','
-  lon ','
-  sog ','
-  cog ','
-  heading ','
-  vesselName ','
-  imo? ','
-  callSign? ','
-  vesselType? ','
-  status? ','
-  length? ','
-  width? ','
-  draft? ','
-  cargo? ','
-  transceiverClass '\r'? '\n';
+    mmsi COMMA
+    dateTime COMMA
+    lat COMMA
+    lon COMMA
+    sog COMMA
+    cog COMMA
+    heading COMMA
+    vesselName? COMMA
+    imo? COMMA
+    callSign? COMMA
+    vesselType? COMMA
+    status? COMMA
+    length? COMMA
+    width? COMMA
+    draft? COMMA
+    cargo? COMMA
+    transceiverClass NEWLINE;
 
 mmsi: NUMBER;
 dateTime: DATETIME;
@@ -30,36 +31,37 @@ lon: FLOAT;
 sog: FLOAT;
 cog: FLOAT;
 heading: FLOAT;
-vesselName: TEXT? | LETTER | NUMBER;
-imo: TEXT? | LETTER | NUMBER ;
-callSign: TEXT? | LETTER | NUMBER;
-vesselType: SIGN? | NUMBER ;
-status: SIGN? | NUMBER;
+vesselName: STRING_FIELD | NUMBER;
+imo: IMO_NUMBER;
+callSign: STRING_FIELD | NUMBER;
+vesselType: NUMBER;
+status: NUMBER;
 length: NUMBER;
 width: NUMBER;
 draft: FLOAT;
 cargo: NUMBER;
 transceiverClass: LETTER;
 
-SIGN: '-';
-NUMBER: SIGN?[0-9]+;
-FLOAT: NUMBER'.'NUMBER;
+// Lexer Rules
+HEADER_TEXT: 'MMSI,BaseDateTime,LAT,LON,SOG,COG,Heading,VesselName,IMO,CallSign,VesselType,Status,Length,Width,Draft,Cargo,TransceiverClass';
+COMMA: ',';
+NEWLINE: '\r'? '\n';
 
-MMSINUMBER: DIGIT DIGIT DIGIT DIGIT DIGIT DIGIT DIGIT DIGIT DIGIT;
+IMO_NUMBER: 'IMO' NUMBER;
+DATETIME: DATE 'T' TIME;
+FLOAT: '-'? [0-9]+ '.' [0-9]+;
+NUMBER: [0-9]+;
+STRING_FIELD: ~[,\r\n]+;
+LETTER: [A-Z];
 
-DATETIME : DATE 'T' TIME ;
-DATE : YEAR '-' MONTH '-' DAY ;
-TIME : HOUR ':' MINUTE ':' SECOND ;
+fragment DATE: YEAR '-' MONTH '-' DAY;
+fragment TIME: HOUR ':' MINUTE ':' SECOND;
+fragment YEAR: DIGIT DIGIT DIGIT DIGIT;
+fragment MONTH: DIGIT DIGIT;
+fragment DAY: DIGIT DIGIT;
+fragment HOUR: DIGIT DIGIT;
+fragment MINUTE: DIGIT DIGIT;
+fragment SECOND: DIGIT DIGIT;
+fragment DIGIT: [0-9];
 
-YEAR   : DIGIT DIGIT DIGIT DIGIT ;
-MONTH  : DIGIT DIGIT ;
-DAY    : DIGIT DIGIT ;
-HOUR   : DIGIT DIGIT ;
-MINUTE : DIGIT DIGIT ;
-SECOND : DIGIT DIGIT ;
-
-fragment DIGIT : [0-9] ;
-LETTER: [a-zA-Z] ;
-
-TEXT: [a-zA-Z0-9 '\-''_''.''!''%''&''/''('''"')''+''#''\\'';''^'':''?']+;
-WS: [\t]+ -> skip;
+WS: [ \t]+ -> skip;

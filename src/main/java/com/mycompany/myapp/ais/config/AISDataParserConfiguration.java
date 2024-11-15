@@ -53,16 +53,21 @@ public class AISDataParserConfiguration {
     AISDataBasePojoListener aisDataBasePojoListener(
         ApplicationEventPublisher applicationEventPublisher, 
         boolean simulateRealtimeInserts, 
-        int millisToWait) {
-        return new AISDataBasePojoListener(applicationEventPublisher, simulateRealtimeInserts, millisToWait);
+        int millisToWait,
+        boolean appendZToDateTime) {
+        return new AISDataBasePojoListener(
+            applicationEventPublisher, simulateRealtimeInserts, millisToWait, appendZToDateTime);
     }
 
     public AISDataParser aisDataParser(
         ApplicationEventPublisher applicationEventPublisher, 
         String aisImporterFilename, 
-        boolean simulateRealtimeInserts, int millisToWait) throws IOException {
+        boolean simulateRealtimeInserts, 
+        int millisToWait, 
+        boolean appendZToDateTime) throws IOException {
         AISDataParser parser = new AISDataParser(commonTokenStream(aisImporterFilename));
-        parser.addParseListener(aisDataBasePojoListener(applicationEventPublisher, simulateRealtimeInserts, millisToWait));
+        parser.addParseListener(
+            aisDataBasePojoListener(applicationEventPublisher, simulateRealtimeInserts, millisToWait, appendZToDateTime));
         return parser;
     }
     
@@ -71,7 +76,8 @@ public class AISDataParserConfiguration {
         ApplicationEventPublisher applicationEventPublisher, 
         @Value("${application.input.filename}") String aisImporterFilename, 
         @Value("${application.simulateRealtimeInserts.enabled}") boolean simulateRealtimeInserts,
-        @Value("${application.simulateRealtimeInserts.millisToWait}") int millisToWait) throws IOException {
-        return aisDataParser(applicationEventPublisher, aisImporterFilename, simulateRealtimeInserts, millisToWait).file();
+        @Value("${application.simulateRealtimeInserts.millisToWait}") int millisToWait,
+        @Value("${application.appendZToDateTime}") boolean appendZToDateTime) throws IOException {
+        return aisDataParser(applicationEventPublisher, aisImporterFilename, simulateRealtimeInserts, millisToWait, appendZToDateTime).file();
     }
 }

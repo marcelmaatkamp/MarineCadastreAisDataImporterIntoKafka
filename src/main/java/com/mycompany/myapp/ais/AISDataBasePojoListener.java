@@ -1,10 +1,16 @@
 package com.mycompany.myapp.ais;
 
-import java.time.Duration;
 import java.time.Instant;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+// import java.time.Duration;
+// import java.time.Instant;
+
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 
 import com.mycompany.myapp.ais.parser.AISDataBaseListener;
@@ -19,28 +25,30 @@ public class AISDataBasePojoListener extends AISDataBaseListener {
   private final ApplicationEventPublisher applicationEventPublisher;
   private final boolean simulateRealtimeInserts;
   int millisToWait;
+  boolean appendZToDateTime;
 
   // SortedMap<Instant, AISDataPojo> sortedEventsByDatTimeButAheadOfTime = new
   // TreeMap<>();
   Long offsetInTimeBetweenImportedDataAndNow;
 
-  public AISDataBasePojoListener(ApplicationEventPublisher applicationEventPublisher, boolean simulateRealtimeInserts, int millisToWait) {
+  public AISDataBasePojoListener(ApplicationEventPublisher applicationEventPublisher, boolean simulateRealtimeInserts, int millisToWait, boolean appendZToDateTime) {
     this.applicationEventPublisher = applicationEventPublisher;
     this.simulateRealtimeInserts = simulateRealtimeInserts;
     this.millisToWait = millisToWait;
+    this.appendZToDateTime = appendZToDateTime;
   }
 
   @Override
   public void exitRow(com.mycompany.myapp.ais.parser.AISDataParser.RowContext ctx) {
       AISDataPojo aisDataPojo = ImmutableAISDataPojo.builder().
         mmsi(Integer.valueOf(ctx.mmsi().getText())).
-        dateTime(ctx.dateTime().getText()+"Z").
+        dateTime(appendZToDateTime ? Instant.parse(ctx.dateTime().getText()+"Z").toString() : ctx.dateTime().getText()).
         lat(Double.valueOf(ctx.lat().getText())).
         lon(Double.valueOf(ctx.lon().getText())).
         sog(Float.valueOf(ctx.sog().getText())).
         cog(Float.valueOf(ctx.cog().getText())).
         heading(Float.valueOf(ctx.heading().getText())).
-        vesselName(ctx.vesselName().getText()).
+        vesselName(ctx.vesselName() != null && !ctx.vesselName().isEmpty() && !ctx.vesselName().getText().isEmpty() ? ctx.vesselName().getText() : null).
         imo(ctx.imo() != null && !ctx.imo().isEmpty() ? ctx.imo().getText() : null).
         callSign(ctx.callSign() != null && !ctx.callSign().isEmpty() ? ctx.callSign().getText() : null).
         vesselType( ctx.vesselType() != null && !ctx.vesselType().getText().isEmpty() && !ctx.vesselType().getText().equals("-") ? Short.valueOf(ctx.vesselType().getText()) : null).
@@ -51,6 +59,7 @@ public class AISDataBasePojoListener extends AISDataBaseListener {
         cargo(ctx.cargo() != null && !ctx.cargo().getText().isEmpty() ? ctx.cargo().getText() : null).
         transceiverClass(ctx.transceiverClass() != null && !ctx.transceiverClass().isEmpty() ? ctx.transceiverClass().getText() : null).
         build();
+        log.info(ReflectionToStringBuilder.toString(aisDataPojo));
         
         /*
         if(sleepOnTimeDifference) { 

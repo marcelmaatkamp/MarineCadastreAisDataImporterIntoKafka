@@ -16,6 +16,7 @@ public class JhipsterSampleApplicationApp {
   private static final Logger log = LoggerFactory.getLogger(JhipsterSampleApplicationApp.class);
 
   public static void main(String[] args) throws IOException {
-    var configurableApplicationContext = SpringApplication.run(JhipsterSampleApplicationApp.class, args);
+    SpringApplication.run(JhipsterSampleApplicationApp.class, args);
+    log.info("Application started");
   }
 }

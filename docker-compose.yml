@@ -19,7 +19,7 @@ services:
       - "9092"
       - "9644"
     ports:
-      - "9093:9092"
+      - "9092:9092"
     depends_on: [ ]
     volumes:
       - "redpanda:/var/lib/redpanda/data"
@@ -42,7 +42,7 @@ services:
         kafka:
           brokers: ["redpanda:29092"]
           schemaRegistry:
-            enabled: true
+            enabled: false
             urls: ["http://redpanda:8081"]
         connect:
           enabled: false
@@ -50,7 +50,7 @@ services:
             - name: datagen
               url: http://connect:8083
     ports:
-      - "8085:8080"
+      - "8086:8080"
     healthcheck: { test: "curl -f localhost:8080", interval: 1s, start_period: 30s }
     depends_on:
       redpanda:
